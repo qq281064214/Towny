@@ -116,9 +116,9 @@ public class TownyUniverse {
 		return TownyAPI.getInstance().isWarTime();
 	}
 
-	public void startWarEvent() {
-		com.palmergames.bukkit.towny.TownyUniverse.getInstance().startWarEvent();
-	}
+//	public void startWarEvent() {
+//		com.palmergames.bukkit.towny.TownyUniverse.getInstance().startWarEvent();
+//	}
 
 	public void endWarEvent() {
 		com.palmergames.bukkit.towny.TownyUniverse.getInstance().endWarEvent();
