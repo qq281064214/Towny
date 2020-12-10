@@ -399,15 +399,11 @@ public class TownyEntityListener implements Listener {
 
 		for (Block block : blocks) {
 						
-			if (!TownyAPI.getInstance().isWilderness(block.getLocation())) {
-			
-				TownBlock townBlock = TownyAPI.getInstance().getTownBlock(block.getLocation());				
-				// Not Wartime
-				if (!TownyAPI.getInstance().isWarTime())
-					if (CombatUtil.preventPvP(townyWorld, townBlock) && detrimental) {
-						event.setCancelled(true);
-						break;
-					}				
+			if (!TownyAPI.getInstance().isWilderness(block.getLocation()) 
+					&&CombatUtil.preventPvP(townyWorld, TownyAPI.getInstance().getTownBlock(block.getLocation())) 
+					&& detrimental) {
+				event.setCancelled(true);
+				break;
 			}			
 		}	
 	}	
@@ -456,20 +452,14 @@ public class TownyEntityListener implements Listener {
 
 		}
 
-		// Not Wartime
-		if (!TownyAPI.getInstance().isWarTime())
-			for (LivingEntity defender : affectedEntities) {
-				/*
-				 * Don't block potion use on ourselves
-				 * yet allow the use of beneficial potions on all.
-				 */
-				if (attacker != defender)
-					if (CombatUtil.preventDamageCall(plugin, attacker, defender) && detrimental) {
-
-						event.setIntensity(defender, -1.0);
-					}
-			}
-
+		for (LivingEntity defender : affectedEntities) {
+			/*
+			 * Don't block potion use on ourselves
+			 * yet allow the use of beneficial potions on all.
+			 */
+			if (attacker != defender && CombatUtil.preventDamageCall(plugin, attacker, defender) && detrimental)
+				event.setIntensity(defender, -1.0);
+		}
 	}
 
 	/**
@@ -732,8 +722,8 @@ public class TownyEntityListener implements Listener {
 				attacker = (LivingEntity) source;
 			}
 
-			// There is an attacker and Not war time.
-			if ((attacker != null) && (!TownyAPI.getInstance().isWarTime())) {
+			// There is an attacker.
+			if (attacker != null) {
 
 				if (CombatUtil.preventDamageCall(plugin, attacker, defender)) {
 					// Remove the projectile here so no
