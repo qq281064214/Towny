@@ -3456,9 +3456,6 @@ public class TownCommand extends BaseCommand implements CommandExecutor, TabComp
 			Town town;
 			TownyWorld world;
 			try {
-				if (TownyAPI.getInstance().isWarTime())
-					throw new TownyException(Translation.of("msg_war_cannot_do"));
-
 				resident = getResidentOrThrow(player.getUniqueId());
 				town = resident.getTown();
 				world = townyUniverse.getDataSource().getWorld(player.getWorld().getName());
